@@ -10,6 +10,9 @@ import org.apache.poi.ss.usermodel.DataValidationConstraint
 import org.apache.poi.ss.util.CellRangeAddressList
 import kotlin.reflect.KClass
 
+/**
+ * 通用的数据验证支持数据验证和批注
+ */
 class UniversalDropdownHandler<T : Any>(
     private val dataClass: KClass<T>,
     private val dynamicOptions: Map<String, Array<String>> = emptyMap(),

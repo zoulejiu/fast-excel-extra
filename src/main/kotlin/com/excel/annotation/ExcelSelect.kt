@@ -1,5 +1,8 @@
 package com.excel.annotation
 
+/**
+ * 数据验证下拉框
+ */
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class ExcelSelect(

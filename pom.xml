@@ -3,11 +3,44 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.excel</groupId>
+    <packaging>jar</packaging>
+    <groupId>io.github.zoulejiu</groupId>
     <artifactId>fast-excel_extra</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
+    <version>1.0</version>
+    <name>Fast Excel Extra</name>
+    <description>Kotlin extension for FastExcel: supports Excel export with dropdowns and column comments</description>
+    <url>https://github.com/yourusername/fast-excel-extra</url>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>lejiu</id>
+            <name>zoulejiu</name>
+            <email>zoulejiu@gmail.com</email>
+            <organization>Lejiu</organization>
+            <organizationUrl>https://github.com/zoulejiu</organizationUrl>
+        </developer>
+    </developers>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+    <scm>
+        <connection>scm:git:git://github.com/zoulejiu/fast-excel_extra.git</connection>
+        <developerConnection>scm:git:ssh://github.com/zoulejiu/fast-excel_extra.git</developerConnection>
+        <url>https://github.com/zoulejiu/fast-excel_extra</url>
+    </scm>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -19,7 +52,7 @@
             <groupId>cn.idev.excel</groupId>
             <artifactId>fastexcel</artifactId>
             <version>1.3.0</version>
-<!--            <scope>runtime</scope>-->
+<!--            <scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -39,6 +72,7 @@
         </dependency>
     </dependencies>
     <build>
+        <sourceDirectory>${project.basedir}/src</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -62,9 +96,13 @@
                 </executions>
                 <configuration>
                     <jvmTarget>${maven.compiler.target}</jvmTarget>
+                    <sourceDirs>
+                        <sourceDir>src/main/java</sourceDir>
+                        <sourceDir>src/main/kotlin</sourceDir>
+                    </sourceDirs>
                 </configuration>
             </plugin>
-            <!-- Javadoc 插件 -->
+            <!-- Javadoc 插件
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -78,7 +116,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
             <!-- 打包源码插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -87,13 +125,54 @@
                 <executions>
                     <execution>
                         <id>attach-sources</id>
-                        <phase>verify</phase>
+<!--                        <phase>verify</phase>-->
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.8.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                </configuration>
+            </plugin>
+            <!-- Maven GPG 插件（Release 版本签名） -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.8</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <passphraseServerId>gpg.passphrase</passphraseServerId>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.dokka</groupId>
+                <artifactId>dokka-maven-plugin</artifactId>
+                <version>2.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>javadocJar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 

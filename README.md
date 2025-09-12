@@ -6,6 +6,15 @@
 - **Excel 列头批注提示**
 - 支持静态和动态下拉数据源
 - 支持自定义列头顺序（基于 `@ExcelProperty.index`）
+## Maven引用
+```xml
+
+<dependency>
+    <groupId>io.github.zoulejiu</groupId>
+    <artifactId>fast-excel_extra</artifactId>
+    <version>1.0</version>
+</dependency>
+```
 
 ---
 
