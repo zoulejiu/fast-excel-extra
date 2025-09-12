@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <groupId>io.github.zoulejiu</groupId>
-    <artifactId>fast-excel_extra</artifactId>
-    <version>1.0</version>
+    <artifactId>fast-excel-extra</artifactId>
+    <version>1.1</version>
     <name>Fast Excel Extra</name>
     <description>Kotlin extension for FastExcel: supports Excel export with dropdowns and column comments</description>
     <url>https://github.com/yourusername/fast-excel-extra</url>
@@ -37,9 +37,9 @@
         </repository>
     </distributionManagement>
     <scm>
-        <connection>scm:git:git://github.com/zoulejiu/fast-excel_extra.git</connection>
-        <developerConnection>scm:git:ssh://github.com/zoulejiu/fast-excel_extra.git</developerConnection>
-        <url>https://github.com/zoulejiu/fast-excel_extra</url>
+        <connection>scm:git:git://github.com/zoulejiu/fast-excel-extra.git</connection>
+        <developerConnection>scm:git:ssh://github.com/zoulejiu/fast-excel-extra.git</developerConnection>
+        <url>https://github.com/zoulejiu/fast-excel-extra</url>
     </scm>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

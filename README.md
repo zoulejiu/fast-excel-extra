@@ -11,8 +11,8 @@
 
 <dependency>
     <groupId>io.github.zoulejiu</groupId>
-    <artifactId>fast-excel_extra</artifactId>
-    <version>1.0</version>
+    <artifactId>fast-excel-extra</artifactId>
+    <version>1.1</version>
 </dependency>
 ```
 
