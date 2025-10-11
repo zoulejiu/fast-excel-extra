@@ -6,7 +6,8 @@
     <packaging>jar</packaging>
     <groupId>io.github.zoulejiu</groupId>
     <artifactId>fast-excel-extra</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
+<!--    <version>1.2-SNAPSHOT</version>-->
     <name>Fast Excel Extra</name>
     <description>Kotlin extension for FastExcel: supports Excel export with dropdowns and column comments</description>
     <url>https://github.com/yourusername/fast-excel-extra</url>

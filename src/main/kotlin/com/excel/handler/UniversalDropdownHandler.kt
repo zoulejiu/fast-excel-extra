@@ -1,5 +1,6 @@
 package com.excel.handler
 
+import cn.idev.excel.annotation.ExcelIgnore
 import cn.idev.excel.annotation.ExcelProperty
 import cn.idev.excel.write.handler.SheetWriteHandler
 import cn.idev.excel.write.handler.context.SheetWriteHandlerContext
@@ -68,12 +69,11 @@ class UniversalDropdownHandler<T : Any>(
         val headerName: String,
         val index: Int
     )
-
     private fun <T : Any> resolveExcelColumns(clazz: KClass<T>): List<ExcelColumnMeta> {
         val fields = clazz.java.declaredFields
         var autoIndex = 0
 
-        return fields.map { field ->
+        return fields.filter {  it.getAnnotation(ExcelIgnore::class.java)==null }.map { field ->
             val ann = field.getAnnotation(ExcelProperty::class.java)
             val header = ann?.value?.firstOrNull() ?: field.name
             val annIndex = ann?.index ?: -1
