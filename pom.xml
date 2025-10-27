@@ -74,8 +74,35 @@
     </dependencies>
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/main/test</testSourceDirectory>
+<!--        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>-->
+<!--        <testSourceDirectory>${project.basedir}/src/main/test</testSourceDirectory>-->
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>dokka-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>dokka</classifier>
+                            <classesDirectory>${project.build.directory}/dokka</classesDirectory>
+                            <skipIfEmpty>true</skipIfEmpty>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Kotlin 编译插件 -->
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -99,6 +126,10 @@
                 </executions>
                 <configuration>
                     <jvmTarget>${maven.compiler.target}</jvmTarget>
+<!--                    <sourceDirs>-->
+<!--                        <sourceDir>src/main/java</sourceDir>-->
+<!--                        <sourceDir>src/main/kotlin</sourceDir>-->
+<!--                    </sourceDirs>-->
                 </configuration>
             </plugin>
             <!-- Java 编译插件 -->
