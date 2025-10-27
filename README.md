@@ -2,12 +2,12 @@
 
 `fast-excel-extra` 是一个基于 **FastExcel + Apache POI** 的 Kotlin 扩展工具库，提供以下增强功能：
 
-- ✅ **Excel 单元格锁定控制**（🆕 v1.3）
+- ✅ **Excel 单元格锁定控制**（🆕 v1.4）
 - ✅ **Excel 导出带下拉框的数据**
 - ✅ **Excel 列头批注提示**
 - ✅ 支持静态和动态下拉数据源
 - ✅ 支持自定义列头顺序（基于 `@ExcelProperty.index`）
-- ✅ 完美兼容 `excludeColumnFieldNames`（🆕 v1.3）
+- ✅ 完美兼容 `excludeColumnFieldNames`（🆕 v1.4）
 
 ## Maven 引用
 
@@ -15,7 +15,7 @@
 <dependency>
     <groupId>io.github.zoulejiu</groupId>
     <artifactId>fast-excel-extra</artifactId>
-    <version>1.3</version>
+    <version>1.4</version>
 </dependency>
 ```
 
@@ -73,7 +73,7 @@
 <dependency>
     <groupId>io.github.zoulejiu</groupId>
     <artifactId>fast-excel-extra</artifactId>
-    <version>1.3</version>
+    <version>1.4</version>
 </dependency>
 ```
 
@@ -302,7 +302,7 @@ FastExcel.write("products.xlsx")
 
 ### 兼容 excludeColumnFieldNames
 
-v1.3 完美支持 `excludeColumnFieldNames`，自动处理列索引映射：
+v1.4 完美支持 `excludeColumnFieldNames`，自动处理列索引映射：
 
 ```kotlin
 FastExcel.write("output.xlsx")
@@ -343,15 +343,17 @@ FastExcel.write("order.xlsx")
 
 ## 更新日志
 
-### v1.3 (2025-10-27)
+### v1.4 (2025-10-27)
 
 - 🆕 新增 `LockHandler` 单元格锁定功能
-- 🆕 新增 `@ExcelEditable` 注解控制可编辑性
-- ✨ 支持动态指定可编辑字段
+- 🆕 新增 `@ExcelEditable` 注解控制可编辑性（默认值：false 不可编辑）
+- ✨ 支持动态指定可编辑字段（参数优先级高于注解）
 - ✨ 支持密码保护
-- ✨ 允许调整列宽和行高
+- ✨ 允许调整列宽和行高（不影响用户体验）
 - 🐛 修复 `excludeColumnFieldNames` 导致的列索引错位问题
-- 🔧 改进 `ExcelFieldUtils.resolveExcelColumns()` 支持排除列
+- 🔧 改进 `ExcelFieldUtils.resolveExcelColumns()` 支持排除列参数
+- 🔧 优化 `pom.xml` 配置，确保 Kotlin 代码正确编译打包
+- 📚 新增完整的使用指南和 API 文档
 
 ### v1.1
 
