@@ -1,11 +1,10 @@
 package com.excel.handler
 
-import cn.idev.excel.annotation.ExcelIgnore
-import cn.idev.excel.annotation.ExcelProperty
 import cn.idev.excel.write.handler.SheetWriteHandler
 import cn.idev.excel.write.handler.context.SheetWriteHandlerContext
 import com.excel.annotation.ExcelComment
 import com.excel.annotation.ExcelSelect
+import com.excel.util.ExcelFieldUtils
 import org.apache.poi.ss.usermodel.DataValidation
 import org.apache.poi.ss.usermodel.DataValidationConstraint
 import org.apache.poi.ss.util.CellRangeAddressList
@@ -24,8 +23,15 @@ class UniversalDropdownHandler<T : Any>(
         val sheet = context.writeSheetHolder.sheet
         val helper = sheet.dataValidationHelper
 
-        // 计算字段与列的对应关系（兼容 @ExcelProperty.index 和源码顺序）
-        val columnMetas = resolveExcelColumns(dataClass)
+        // 从 context 中获取排除的列
+        val excludedFields = try {
+            context.writeSheetHolder?.excludeColumnFieldNames() ?: emptySet()
+        } catch (e: Exception) {
+            emptySet()
+        }
+
+        // 计算字段与列的对应关系（兼容 @ExcelProperty.index、源码顺序和 excludeColumnFieldNames）
+        val columnMetas = ExcelFieldUtils.resolveExcelColumns(dataClass, excludedFields)
 
         for (meta in columnMetas) {
             val field = dataClass.java.getDeclaredField(meta.fieldName)
@@ -62,43 +68,5 @@ class UniversalDropdownHandler<T : Any>(
             }
 
         }
-    }
-
-    data class ExcelColumnMeta(
-        val fieldName: String,
-        val headerName: String,
-        val index: Int
-    )
-    private fun <T : Any> resolveExcelColumns(clazz: KClass<T>): List<ExcelColumnMeta> {
-        val fields = clazz.java.declaredFields
-        var autoIndex = 0
-
-        return fields.filter {  it.getAnnotation(ExcelIgnore::class.java)==null }.map { field ->
-            val ann = field.getAnnotation(ExcelProperty::class.java)
-            val header = ann?.value?.firstOrNull() ?: field.name
-            val annIndex = ann?.index ?: -1
-
-            val finalIndex = if (annIndex != -1) {
-                annIndex
-            } else {
-                // 自动分配 index（跳过已有的 index）
-                while (true) {
-                    if (fields.none {
-                            it.getAnnotation(ExcelProperty::class.java)?.index == autoIndex
-                        }) {
-                        break
-                    }
-                    autoIndex++
-                }
-                autoIndex++
-                autoIndex - 1
-            }
-
-            ExcelColumnMeta(
-                fieldName = field.name,
-                headerName = header,
-                index = finalIndex
-            )
-        }.sortedBy { it.index }
     }
 }
